@@ -52,6 +52,14 @@ class FromROI(
             del metadata["prefix"]
         set_object_metadata(located_object, **metadata)
 
+        # store additional values in meta-data
+        located_object.metadata["score"] = roi_object.score
+        located_object.metadata["label_index"] = roi_object.label
+        if hasattr(located_object, "minrect_w"):
+            located_object.metadata["minrect_w"] = roi_object.minrect_w
+        if hasattr(located_object, "minrect_h"):
+            located_object.metadata["minrect_h"] = roi_object.minrect_h
+
         # Add the polygon
         if roi_object.has_polygon():
             located_object.set_polygon(roi_object.polygon())
